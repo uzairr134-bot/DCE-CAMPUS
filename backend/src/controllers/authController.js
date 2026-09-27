@@ -25,6 +25,11 @@ export async function signup(req, res, next) {
       error.statusCode = 401
       throw error
     }
+    if (data.role === 'student' && (!process.env.STUDENT_ACCESS_CODE || data.accessCode !== process.env.STUDENT_ACCESS_CODE)) {
+      const error = new Error('The student access code is incorrect.')
+      error.statusCode = 401
+      throw error
+    }
     if (data.role === 'admin' && !data.adminCategory) {
       const error = new Error('Please choose the issue category this administrator manages.')
       error.statusCode = 400
@@ -54,8 +59,9 @@ export async function login(req, res, next) {
     const user = await (await getDb()).collection('users').findOne({ email: data.email.toLowerCase() })
     const validPassword = user && await bcrypt.compare(data.password, user.passwordHash)
     const validAdminCode = data.role !== 'admin' || Boolean(process.env.ADMIN_ACCESS_CODE && data.accessCode === process.env.ADMIN_ACCESS_CODE)
-    const valid = validPassword && user.role === data.role && validAdminCode
-    if (!valid) return res.status(401).json({ error: 'Incorrect email, password, or account role.' })
+    const validStudentCode = data.role !== 'student' || Boolean(process.env.STUDENT_ACCESS_CODE && data.accessCode === process.env.STUDENT_ACCESS_CODE)
+    const valid = validPassword && user.role === data.role && validAdminCode && validStudentCode
+    if (!valid) return res.status(401).json({ error: 'Incorrect email, password, access code, or account role.' })
 
     const token = jwt.sign({
       id: user._id.toString(),

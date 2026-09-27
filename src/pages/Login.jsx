@@ -5,6 +5,7 @@ import { api } from '../api.js'
 function Login({ onLogin, showToast }) {
   const navigate = useNavigate()
   const [role, setRole] = useState(() => 'admin')
+  console.log("Loading updated Login page. Role:", role)
   const [mode, setMode] = useState('login')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -38,7 +39,7 @@ function Login({ onLogin, showToast }) {
           email: cleanEmail,
           password,
           role,
-          accessCode: role === 'admin' ? accessCode : undefined,
+          accessCode,
           adminCategory: role === 'admin' ? adminCategory : undefined
         })
         setMode('login')
@@ -54,7 +55,7 @@ function Login({ onLogin, showToast }) {
     }
 
     try {
-      const authResponse = await api.login({ email: cleanEmail, password, role, accessCode: role === 'admin' ? accessCode : undefined })
+      const authResponse = await api.login({ email: cleanEmail, password, role, accessCode })
       onLogin(authResponse)
       showToast('Welcome to GDC Ganderbal CampusFix!')
       navigate(role === 'admin' ? '/admin' : '/home')
@@ -132,36 +133,34 @@ function Login({ onLogin, showToast }) {
               />
             </span>
           </label>
-          {role === 'admin' && (
-            <label className="full">
-              Administrator access code
-              <span className="password-input-wrap">
-                <input
-                  type={showAccessCode ? 'text' : 'password'}
-                  value={accessCode}
-                  onChange={(e) => setAccessCode(e.target.value)}
-                  required
-                />
-                <button
-                  className={showAccessCode ? 'password-toggle is-visible' : 'password-toggle'}
-                  type="button"
-                  aria-label={showAccessCode ? 'Hide access code' : 'Show access code'}
-                  title={showAccessCode ? 'Hide access code' : 'Show access code'}
-                  aria-pressed={showAccessCode}
-                  onPointerDown={(e) => {
+          <label className="full">
+            {role === 'admin' ? 'Administrator access code' : 'Student access code'}
+            <span className="password-input-wrap">
+              <input
+                type={showAccessCode ? 'text' : 'password'}
+                value={accessCode}
+                onChange={(e) => setAccessCode(e.target.value)}
+                required
+              />
+              <button
+                className={showAccessCode ? 'password-toggle is-visible' : 'password-toggle'}
+                type="button"
+                aria-label={showAccessCode ? 'Hide access code' : 'Show access code'}
+                title={showAccessCode ? 'Hide access code' : 'Show access code'}
+                aria-pressed={showAccessCode}
+                onPointerDown={(e) => {
+                  e.preventDefault()
+                  setShowAccessCode((visible) => !visible)
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault()
                     setShowAccessCode((visible) => !visible)
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault()
-                      setShowAccessCode((visible) => !visible)
-                    }
-                  }}
-                />
-              </span>
-            </label>
-          )}
+                  }
+                }}
+              />
+            </span>
+          </label>
           {mode === 'signup' && role === 'admin' && (
             <label className="full">
               Issue category managed by this administrator
