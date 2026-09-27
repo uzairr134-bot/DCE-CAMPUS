@@ -20,12 +20,12 @@ async function ensureCategoryCapacity(collection, adminCategory, excludedUserId 
 export async function signup(req, res, next) {
   try {
     const data = parseBody(signupSchema, req.body)
-    if (data.role === 'admin' && (!process.env.ADMIN_ACCESS_CODE || data.accessCode !== process.env.ADMIN_ACCESS_CODE)) {
+    if (data.role === 'admin' && (!process.env.ADMIN_ACCESS_CODE || data.accessCode !== process.env.ADMIN_ACCESS_CODE.trim())) {
       const error = new Error('The administrator access code is incorrect.')
       error.statusCode = 401
       throw error
     }
-    if (data.role === 'student' && (!process.env.STUDENT_ACCESS_CODE || data.accessCode !== process.env.STUDENT_ACCESS_CODE)) {
+    if (data.role === 'student' && (!process.env.STUDENT_ACCESS_CODE || data.accessCode !== process.env.STUDENT_ACCESS_CODE.trim())) {
       const error = new Error('The student access code is incorrect.')
       error.statusCode = 401
       throw error
@@ -58,8 +58,8 @@ export async function login(req, res, next) {
     const data = parseBody(loginSchema, req.body)
     const user = await (await getDb()).collection('users').findOne({ email: data.email.toLowerCase() })
     const validPassword = user && await bcrypt.compare(data.password, user.passwordHash)
-    const validAdminCode = data.role !== 'admin' || Boolean(process.env.ADMIN_ACCESS_CODE && data.accessCode === process.env.ADMIN_ACCESS_CODE)
-    const validStudentCode = data.role !== 'student' || Boolean(process.env.STUDENT_ACCESS_CODE && data.accessCode === process.env.STUDENT_ACCESS_CODE)
+    const validAdminCode = data.role !== 'admin' || Boolean(process.env.ADMIN_ACCESS_CODE && data.accessCode === process.env.ADMIN_ACCESS_CODE.trim())
+    const validStudentCode = data.role !== 'student' || Boolean(process.env.STUDENT_ACCESS_CODE && data.accessCode === process.env.STUDENT_ACCESS_CODE.trim())
     const valid = validPassword && user.role === data.role && validAdminCode && validStudentCode
     if (!valid) return res.status(401).json({ error: 'Incorrect email, password, access code, or account role.' })
 
