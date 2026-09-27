@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CampusFix Demo Video</title>
+  <style>
+    :root { --navy: #082338; --blue: #0b4260; --cyan: #67d6d0; --coral: #ff876d; --white: #f5fbff; --muted: #a8c2ce; }
+    * { box-sizing: border-box; }
+    body { margin: 0; width: 1280px; height: 720px; overflow: hidden; color: var(--white); background: var(--navy); font: 22px Segoe UI, sans-serif; }
+    .scene { display: none; width: 100%; height: 100%; padding: 72px 86px; position: relative; overflow: hidden; background: radial-gradient(circle at 85% 10%, #17627a 0, transparent 34%), linear-gradient(135deg, #082338 0%, #0b3048 100%); animation: sceneFade 1s ease both; }
+    .scene.active { display: block; }
+    .eyebrow { color: var(--cyan); text-transform: uppercase; letter-spacing: 4px; font-size: 15px; font-weight: 700; animation: riseUp 0.8s ease both; }
+    h1 { max-width: 730px; margin: 28px 0 18px; font-size: 66px; line-height: 1.02; letter-spacing: -1px; animation: riseUp 0.9s ease 0.15s both; }
+    h2 { margin: 18px 0; font-size: 42px; animation: riseUp 0.9s ease 0.15s both; }
+    p { max-width: 660px; color: var(--muted); line-height: 1.5; animation: riseUp 0.9s ease 0.25s both; }
+    .brand { position: absolute; top: 36px; right: 72px; font-weight: 700; letter-spacing: 2px; animation: slideIn 0.7s ease both; }
+    .brand span { color: var(--cyan); }
+    .steps { display: flex; gap: 14px; margin-top: 48px; }
+    .step { width: 190px; padding: 20px; border: 1px solid #ffffff22; background: #ffffff0b; border-radius: 14px; animation: floatCard 4s ease-in-out infinite; }
+    .step:nth-child(2) { animation-delay: 0.4s; }
+    .step:nth-child(3) { animation-delay: 0.8s; }
+    .step b { display: block; color: var(--coral); font-size: 30px; margin-bottom: 8px; }
+    .phone { position: absolute; right: 120px; top: 74px; width: 318px; height: 574px; padding: 18px; border: 7px solid #c7e7ed; border-radius: 35px; background: #f4fbfc; color: #183b4f; box-shadow: 0 30px 80px #0006; transform: rotate(3deg); animation: floatPhone 5s ease-in-out infinite; }
+    .phone-top { height: 32px; border-bottom: 1px solid #d5e6ea; color: #5f8291; font-size: 13px; }
+    .phone h3 { margin: 24px 0 8px; font-size: 25px; }
+    .field { margin: 13px 0; padding: 13px; border-radius: 10px; background: #e6f1f4; color: #5c7c8b; font-size: 14px; animation: pulseGlow 2.2s ease-in-out infinite; }
+    .field strong { display: block; color: #183b4f; font-size: 17px; margin-top: 5px; }
+    .button { margin-top: 18px; padding: 14px; border-radius: 10px; text-align: center; color: #fff; background: #e66e5c; font-weight: 700; box-shadow: 0 10px 20px rgba(230,110,92,0.35); animation: pulseGlow 2s ease-in-out infinite; }
+    .dashboard { position: absolute; right: 72px; top: 128px; width: 560px; padding: 26px; border-radius: 18px; background: #f4fbfc; color: #173b4d; box-shadow: 0 30px 80px #0006; animation: riseUp 0.9s ease both; }
+    .dashboard-head { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #dbe9ed; padding-bottom: 16px; }
+    .dashboard-head b { font-size: 23px; }
+    .pill { padding: 7px 12px; border-radius: 99px; color: #176477; background: #d7f3f1; font-size: 13px; font-weight: 700; }
+    .report { display: grid; grid-template-columns: 1fr auto; gap: 15px; padding: 22px 0; border-bottom: 1px solid #e2edf0; animation: riseUp 1s ease both; }
+    .report small { display: block; color: #75919c; margin-top: 7px; }
+    .photo { position: absolute; right: 112px; top: 118px; width: 535px; height: 410px; border-radius: 18px; overflow: hidden; background: linear-gradient(135deg, #a37e58, #e0ba83 48%, #564638); box-shadow: 0 30px 80px #0006; animation: photoZoom 5s ease-in-out infinite alternate; }
+    .photo:before, .photo:after { content: ''; position: absolute; background: #533d31; border-radius: 30px; transform: rotate(18deg); }
+    .photo:before { width: 490px; height: 150px; right: -70px; top: 70px; }
+    .photo:after { width: 440px; height: 145px; left: -80px; bottom: 20px; transform: rotate(-14deg); background: #b88455; }
+    .share-card { position: absolute; right: 144px; bottom: 92px; padding: 20px 28px; border-radius: 14px; background: #f4fbfc; color: #173b4d; box-shadow: 0 15px 40px #0005; animation: riseUp 0.8s ease 0.25s both; }
+    .share-card b { display: block; margin-bottom: 8px; }
+    .check { position: absolute; right: 150px; top: 150px; width: 140px; height: 140px; border-radius: 50%; display: grid; place-items: center; color: #073445; background: var(--cyan); font-size: 74px; font-weight: 300; box-shadow: 0 18px 45px #0005; animation: popIn 0.7s ease, pulseGlow 2s ease-in-out infinite; }
+    .outcome { display: flex; gap: 18px; margin-top: 44px; }
+    .metric { min-width: 190px; padding: 20px; border-left: 3px solid var(--coral); background: #ffffff0a; animation: riseUp 0.8s ease both; }
+    .metric:nth-child(2) { animation-delay: 0.2s; }
+    .metric:nth-child(3) { animation-delay: 0.4s; }
+    .metric strong { display: block; font-size: 39px; color: var(--white); }
+    .metric span { color: var(--muted); font-size: 15px; }
+    .credit-box { position: absolute; left: 50%; bottom: 110px; transform: translateX(-50%); width: 680px; padding: 28px 36px; border: 1px solid rgba(255,255,255,0.18); border-radius: 22px; background: rgba(8, 35, 56, 0.62); backdrop-filter: blur(10px); text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.35); animation: riseUp 0.8s ease both; }
+    .credit-box .small { color: var(--cyan); text-transform: uppercase; letter-spacing: 5px; font-size: 14px; font-weight: 700; }
+    .credit-box h3 { margin: 18px 0 10px; font-size: 42px; }
+    .credit-box .names { font-size: 28px; letter-spacing: 0.06em; color: var(--white); }
+    @keyframes sceneFade { from { opacity: 0; transform: scale(1.02); } to { opacity: 1; transform: scale(1); } }
+    @keyframes riseUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideIn { from { opacity: 0; transform: translateX(28px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes floatCard { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+    @keyframes floatPhone { 0%, 100% { transform: rotate(3deg) translateY(0px); } 50% { transform: rotate(4deg) translateY(-10px); } }
+    @keyframes pulseGlow { 0%, 100% { box-shadow: 0 0 0 rgba(103,214,208,0.08); } 50% { box-shadow: 0 0 22px rgba(103,214,208,0.38); } }
+    @keyframes photoZoom { 0% { transform: scale(1); } 100% { transform: scale(1.06); } }
+    @keyframes popIn { 0% { opacity: 0; transform: scale(0.7); } 70% { opacity: 1; transform: scale(1.12); } 100% { opacity: 1; transform: scale(1); } }
+  </style>
+</head>
+<body>
+  <section class="scene" data-scene="1"><div class="brand"><span>GDC</span> CAMPUSFIX</div><div class="eyebrow">A better campus, one report at a time</div><h1>Small reports.<br><span style="color:var(--cyan)">Real improvements.</span></h1><p>CampusFix gives every student a direct line to the people who can fix what is broken, unsafe, or getting in the way.</p><div class="steps"><div class="step"><b>01</b>Spot it</div><div class="step"><b>02</b>Report it</div><div class="step"><b>03</b>See it fixed</div></div></section>
+  <section class="scene" data-scene="2"><div class="brand"><span>GDC</span> CAMPUSFIX</div><div class="eyebrow">01 / Student experience</div><h2>Report an issue in under a minute.</h2><p>Add the location, priority, description, and an optional photo. Students can also request an instant administrator buzzer alert for urgent cases.</p><div class="phone"><div class="phone-top">GDC Ganderbal · CampusFix</div><h3>Report an issue</h3><div class="field">Title<strong>Broken classroom light</strong></div><div class="field">Location<strong>Science Block · Room 204</strong></div><div class="field">Priority<strong>High</strong></div><div class="button">Submit report</div></div></section>
+  <section class="scene" data-scene="3"><div class="brand"><span>GDC</span> CAMPUSFIX</div><div class="eyebrow">02 / Administrator response</div><h2>Every report becomes a clear next step.</h2><p>Administrators see totals, pending work, assigned reports, and incoming notifications in one focused dashboard.</p><div class="dashboard"><div class="dashboard-head"><b>Admin Dashboard</b><span class="pill">3 new reports</span></div><div class="report"><div><b>Broken classroom light</b><small>Science Block · Electrical</small></div><span class="pill">Assigned</span></div><div class="report"><div><b>Water leak near library</b><small>North corridor · Plumbing</small></div><span class="pill">Reported</span></div><div class="report"><div><b>Damaged desk row</b><small>Room 106 · Furniture</small></div><span class="pill">Assigned</span></div></div></section>
+  <section class="scene" data-scene="4"><div class="brand"><span>GDC</span> CAMPUSFIX</div><div class="eyebrow">03 / Shared proof</div><h2>Progress is visible, not vague.</h2><p>The administrator can share a resolution photo directly to the student's account. The student sees the evidence on the same report they created.</p><div class="photo"></div><div class="share-card"><b>Photo shared with student</b><span>Broken classroom light · Assigned</span></div></section>
+  <section class="scene" data-scene="5"><div class="brand"><span>GDC</span> CAMPUSFIX</div><div class="eyebrow">04 / Student confirmation</div><h2>The person who reported it closes the loop.</h2><p>When the fix is complete, the reporting student taps <strong style="color:var(--white)">Mark as resolved</strong>. The platform records the resolved case and keeps the campus team accountable.</p><div class="check">✓</div><div class="phone" style="right:120px; top:110px; transform:rotate(-3deg)"><div class="phone-top">My campus reports</div><h3>Broken classroom light</h3><div class="field">Status<strong>Assigned</strong></div><div class="field">Shared photo<strong>Resolution evidence</strong></div><div class="button">Mark as resolved</div></div></section>
+  <section class="scene" data-scene="6"><div class="brand"><span>GDC</span> CAMPUSFIX</div><div class="eyebrow">CampusFix / Closing the loop</div><h1>From “someone should fix this” to <span style="color:var(--cyan)">“it is fixed.”</span></h1><p>CampusFix connects student voice, administrator action, and visible outcomes in one simple workflow for a more responsive GDC Ganderbal campus.</p><div class="outcome"><div class="metric"><strong>1 min</strong><span>to file a report</span></div><div class="metric"><strong>1 view</strong><span>for the whole team</span></div><div class="metric"><strong>1 tap</strong><span>to close the loop</span></div></div></section>
+  <section class="scene" data-scene="7">
+    <div class="brand"><span>GDC</span> CAMPUSFIX</div>
+    <div class="credit-box">
+      <div class="small">Project created by</div>
+      <h3>Uzair Rafiq &amp; Huzaif Manzoor</h3>
+      <div class="names">CampusFix • GDC Ganderbal</div>
+    </div>
+  </section>
+  <script>const scene = new URLSearchParams(location.search).get('scene') || '1'; const target = document.querySelector(`[data-scene="${scene}"]`); if (target) target.classList.add('active')</script>
+</body>
+</html>

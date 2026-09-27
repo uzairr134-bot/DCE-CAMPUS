@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CampusFix Presentation</title>
+  <style>
+    @page { size: A4 landscape; margin: 0; }
+    :root { --navy: #092538; --blue: #0b5268; --teal: #67d6d0; --coral: #ff876d; --ink: #173b4d; --muted: #638091; --paper: #f5fbfc; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Segoe UI, Arial, sans-serif; color: var(--ink); background: #dce9ed; }
+    .slide { width: 297mm; height: 210mm; page-break-after: always; position: relative; overflow: hidden; padding: 24mm 27mm; background: var(--paper); }
+    .slide:last-child { page-break-after: auto; }
+    .dark { color: white; background: radial-gradient(circle at 88% 12%, #17637a 0, transparent 32%), linear-gradient(135deg, var(--navy), #0b4057); }
+    .brand { position: absolute; top: 15mm; right: 24mm; font-size: 12px; font-weight: 800; letter-spacing: 2px; }
+    .brand span, .eyebrow { color: var(--teal); }
+    .eyebrow { text-transform: uppercase; letter-spacing: 3px; font-size: 12px; font-weight: 800; }
+    h1 { max-width: 190mm; margin: 20mm 0 8mm; font-size: 52px; line-height: 1.02; letter-spacing: -1px; }
+    h2 { margin: 12mm 0 5mm; font-size: 34px; color: var(--ink); }
+    .dark h2 { color: white; }
+    p { max-width: 175mm; line-height: 1.55; color: var(--muted); font-size: 18px; }
+    .dark p { color: #b9d1d9; }
+    .accent { color: var(--teal); }
+    .footer { position: absolute; bottom: 13mm; left: 27mm; color: #8ba5b0; font-size: 11px; }
+    .number { position: absolute; right: 27mm; bottom: 13mm; color: #8ba5b0; font-size: 11px; }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 22mm; max-width: 235mm; }
+    .step, .benefit { padding: 18px; border-radius: 12px; background: #ffffff12; border: 1px solid #ffffff24; }
+    .step strong { display: block; margin-bottom: 9px; color: var(--coral); font-size: 26px; }
+    .step span { color: #d6e9ed; font-size: 16px; }
+    .points { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; max-width: 240mm; margin-top: 12mm; }
+    .point { display: flex; gap: 14px; align-items: flex-start; padding: 17px; border-left: 4px solid var(--teal); background: white; box-shadow: 0 8px 22px #0b405710; }
+    .point b { color: var(--coral); font-size: 24px; }
+    .point strong { display: block; margin-bottom: 5px; font-size: 17px; }
+    .point span { color: var(--muted); font-size: 14px; line-height: 1.45; }
+    .workflow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 13px; margin-top: 18mm; }
+    .workflow .step { min-height: 85mm; background: white; border: 1px solid #dcebed; box-shadow: 0 8px 22px #0b405710; }
+    .workflow .step strong { color: var(--blue); }
+    .workflow .step span { color: var(--muted); line-height: 1.45; }
+    .quote { margin-top: 25mm; padding: 20px 25px; max-width: 210mm; border-left: 5px solid var(--coral); background: #ffffff12; color: #d6e9ed; font-size: 23px; line-height: 1.4; }
+    .benefits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 13mm; }
+    .benefit { background: white; border: 1px solid #dcebed; box-shadow: 0 8px 22px #0b405710; min-height: 47mm; }
+    .benefit strong { display: block; margin-bottom: 9px; font-size: 18px; }
+    .benefit span { color: var(--muted); font-size: 14px; line-height: 1.5; }
+    .closing { margin-top: 25mm; color: var(--muted); font-size: 19px; }
+  </style>
+</head>
+<body>
+  <section class="slide dark">
+    <div class="brand"><span>GDC</span> CAMPUSFIX</div>
+    <div class="eyebrow">Website presentation</div>
+    <h1>Small reports.<br><span class="accent">Real improvements.</span></h1>
+    <p>CampusFix is a campus issue-reporting platform that connects students with administrators, making problems easier to report, manage, and resolve.</p>
+    <div class="steps"><div class="step"><strong>01</strong><span>Students report problems clearly.</span></div><div class="step"><strong>02</strong><span>Administrators organize the response.</span></div><div class="step"><strong>03</strong><span>Students confirm the resolution.</span></div></div>
+    <div class="footer">GDC Ganderbal · Campus operations</div><div class="number">01</div>
+  </section>
+  <section class="slide">
+    <div class="brand"><span>GDC</span> CAMPUSFIX</div>
+    <div class="eyebrow">How it works</div><h2>A simple four-step workflow</h2>
+    <div class="workflow"><div class="step"><strong>01 · Report</strong><span>Students add a title, location, category, priority, description, and optional photo.</span></div><div class="step"><strong>02 · Notify</strong><span>Urgent reports can trigger an administrator buzzer and browser notification.</span></div><div class="step"><strong>03 · Respond</strong><span>Administrators review reports, assign progress, and share a resolution photo.</span></div><div class="step"><strong>04 · Confirm</strong><span>The reporting student reviews the evidence and taps Mark as resolved.</span></div></div>
+    <div class="quote">“CampusFix turns a vague complaint into a visible, trackable campus action.”</div>
+    <div class="footer">The complete journey from report to resolution</div><div class="number">02</div>
+  </section>
+  <section class="slide">
+    <div class="brand"><span>GDC</span> CAMPUSFIX</div>
+    <div class="eyebrow">Key features</div><h2>Built for students and campus teams</h2>
+    <div class="points"><div class="point"><b>01</b><div><strong>Student reporting</strong><span>Fast forms make it easy to report broken, unsafe, or inconvenient campus conditions.</span></div></div><div class="point"><b>02</b><div><strong>Administrator dashboard</strong><span>One place to see total, pending, assigned, and resolved issue counts.</span></div></div><div class="point"><b>03</b><div><strong>Photo sharing</strong><span>Administrators can share resolution evidence directly with the reporting student.</span></div></div><div class="point"><b>04</b><div><strong>Student confirmation</strong><span>Only the student who filed the issue can confirm that the case is resolved.</span></div></div><div class="point"><b>05</b><div><strong>Live alerts</strong><span>Push notifications and buzzer alerts help urgent reports receive attention quickly.</span></div></div><div class="point"><b>06</b><div><strong>Secure access</strong><span>Student and administrator roles keep actions appropriate to each platform.</span></div></div></div>
+    <div class="footer">Focused features for transparent campus care</div><div class="number">03</div>
+  </section>
+  <section class="slide dark">
+    <div class="brand"><span>GDC</span> CAMPUSFIX</div>
+    <div class="eyebrow">Why it matters</div><h2>Benefits for the whole campus</h2>
+    <div class="benefits"><div class="benefit"><strong>Faster response</strong><span>Reports reach the right team quickly, especially when an urgent buzzer alert is requested.</span></div><div class="benefit"><strong>Clear accountability</strong><span>Assigned work, shared photos, and student confirmation make progress visible.</span></div><div class="benefit"><strong>Better communication</strong><span>Students know what is happening instead of waiting without updates.</span></div><div class="benefit"><strong>Useful data</strong><span>Issue totals and status counts help administrators understand campus needs.</span></div><div class="benefit"><strong>Improved trust</strong><span>Students have a direct voice and a clear role in closing the loop.</span></div><div class="benefit"><strong>Scalable solution</strong><span>The same workflow can support classrooms, facilities, safety, and maintenance.</span></div></div>
+    <p class="closing">CampusFix creates a more responsive GDC Ganderbal campus: report it, respond to it, prove it, and confirm it.</p>
+    <div class="footer">Thank you</div><div class="number">04</div>
+  </section>
+</body>
+</html>
